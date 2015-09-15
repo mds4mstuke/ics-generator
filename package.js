@@ -1,22 +1,19 @@
 Package.describe({
-  name: 'mds4mstuke:ics-generator',
-  version: '0.0.1',
-  // Brief, one-line summary of the package.
-  summary: '',
-  // URL to the Git repository containing the source code for this package.
-  git: '',
-  // By default, Meteor will default to using README.md for documentation.
-  // To avoid submitting documentation, set this field to null.
+  name: 'stuke:ics-generator',
+  version: '0.1.0',
+  summary: 'generate mostly rfc-compliant ics documents',
+  git: 'https://github.com/mds4mstuke/ics-generator',
   documentation: 'README.md'
 });
 
 Package.onUse(function(api) {
   api.versionsFrom('1.1.0.2');
-  api.addFiles('ics-generator.js');
-});
+  api.addFiles([
+    'ics-generator.js',
+    'lib/event.js',
+    'lib/attendee.js',
+    'lib/icsUtils.js'
+]);
 
-Package.onTest(function(api) {
-  api.use('tinytest');
-  api.use('mds4mstuke:ics-generator');
-  api.addFiles('ics-generator-tests.js');
+  api.export(['IcsGenerator']);
 });
