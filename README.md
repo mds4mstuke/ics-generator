@@ -15,42 +15,73 @@ Instantiate and manipulate iCal components. Use setters or construct with prepop
 ```javascript
 //generate entire object at once
 var calOptions = {
-	prodId: "//Sugar Mills//Cereal Production",
-	method: "REQUEST",
-	events: [
-		{
-			summary: "Favorite Cereal Discussion, Part 28",
-			start: new Date(2015, 9, 1, 11),
-			end: new Date(2015, 9, 1, 12),
-			organizer: {name: "Lucky Leprachaun", email: "lucky@sugarmills.com"},
-			attendees: [
-				{name: "Tony Tiger", email: "tony@sugarmills.com", status: "NEEDS_ACTION"}
-			]
-		}
-	]
+    prodId: "//Sugar Mills//Cereal Production",
+    method: "REQUEST",
+    events: [
+        {
+			uid: "6xB7a4M75fogA3kzd@sugarmills.com",
+            summary: "Favorite Cereal Discussion, Part 28",
+            dtStart: new Date(2015, 9, 1, 11),
+            dtEnd: new Date(2015, 9, 1, 12),
+            organizer: {cn: "Lucky Leprachaun", mailTo: "lucky@sugarmills.com"},
+            attendees: [
+                {cn: "Tony Tiger", mailTo: "tony@sugarmills.com", partStat: "NEEDS-ACTION"}
+            ]
+        }
+    ]
 };
-var cal = IcsGenerator(calOptions);
+var cal = new IcsGenerator(calOptions);
 
 //generate event separately
-var newEvent = IcsGenerator.event({
-	summary: "Favorite Cereal Discussion, Part 29",
-	start: new Date(2015, 9, 1, 16),
-	end: new Date(2015, 9, 1, 17),
-	organizer: {name: "Lucky Leprachaun", email: "lucky@sugarmills.com"}
+var newEvent = cal.createEvent({
+	uid: "32eBCNdmBaCerDi7N@sugarmills.com",
+    summary: "Favorite Cereal Discussion, Part 29",
+    dtStart: new Date(2015, 9, 1, 16),
+    dtEnd: new Date(2015, 9, 1, 17),
+    organizer: {cn: "Lucky Leprachaun", mailTo: "lucky@sugarmills.com"}
 });
 //add invitees to event, or supply in constructor
-newEvent.addAttendees([
-	{name: "Tony Tiger", email: "tony@sugarmills.com", status: "NEEDS_ACTION"},
-	{name: "Toucan Sam", email: "toucan@sugarmills.com", status: "ACCEPTED"}
+newEvent.setProperty("attendees", [
+    {cn: "Tony Tiger", mailTo: "tony@sugarmills.com", partStat: "NEEDS-ACTION"},
+    {cn: "Toucan Sam", mailTo: "toucan@sugarmills.com", partStat: "ACCEPTED"}
 ]);
 
 //append event to calendar
 cal.addEvent(newEvent);
 
 //get output
-cal.toIcsString();
-
-
+var out = cal.toIcsString();
+/*
+BEGIN:VCALENDAR
+PRODID://Sugar Mills//Cereal Production
+METHOD:REQUEST
+BEGIN:VEVENT
+ORGANIZER;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;CN=L
+ ucky Leprachaun:MAILTO:lucky@sugarmills.com
+DTSTART:20150901T180000Z
+UID:6xB7a4M75fogA3kzd@sugarmills.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;CN=To
+ ny Tiger:MAILTO:tony@sugarmills.com
+SUMMARY:"Favorite Cereal Discussion, Part 28"
+DTEND:20150901T190000Z
+DTSTAMP:20150815T232211Z
+END:VEVENT
+BEGIN:VEVENT
+ORGANIZER;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;CN=L
+ ucky Leprachaun:MAILTO:lucky@sugarmills.com
+DTSTART:20150901T230000Z
+UID:32eBCNdmBaCerDi7N@sugarmills.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;CN=To
+ ny Tiger:MAILTO:tony@sugarmills.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;CN=Toucan
+  Sam:MAILTO:toucan@sugarmills.com
+SUMMARY:"Favorite Cereal Discussion, Part 29"
+DTEND:20150902T000000Z
+DTSTAMP:20150815T232211Z
+END:VEVENT
+END:VCALENDAR
+*/
 ```
+
 
 apache license applies.
