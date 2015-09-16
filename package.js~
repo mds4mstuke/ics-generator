@@ -1,7 +1,7 @@
 Package.describe({
     name: 'stuke:ics-generator',
-    version: '0.1.1',
-    summary: 'Generate rfc-compliant ical documents (.ics)',
+    version: '0.1.0',
+    summary: 'generate mostly rfc-compliant ics documents',
     git: 'https://github.com/mds4mstuke/ics-generator',
     documentation: 'README.md'
 });
